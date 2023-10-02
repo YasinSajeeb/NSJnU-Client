@@ -1,32 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import logo from '../../../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { FaUserCircle } from "react-icons/fa";
-import { AiOutlineLoading } from 'react-icons/ai';
+import './Navbar.css';
 
 const Navbar = () => {
 
-  const circularImageStyle = {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    overflow: 'hidden',
-    padding: 0
-  };
-
-  const {user, logOut, loading} = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const {user, logOut} = useContext(AuthContext);
+  const dropdownRef = useRef();
 
   useEffect(() => {
-    // Set the local state when the loading state in the context changes
-    setIsLoading(loading);
-  }, [loading]);
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setTimeout(() => {
+          setIsDropdownOpen(false);
+        }, 100); // Add a small delay before closing the dropdown
+      }
+    }
 
-  useEffect(() => {
-    console.log('Navbar - User:', user);
-    console.log('Navbar - Loading:', loading);
-  }, [user, loading]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleLogOut = () => {
     logOut()
@@ -34,17 +32,42 @@ const Navbar = () => {
       .catch(err => console.log(err));
   }
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(prevState => !prevState);
+  };
+
   const menuItems = (
     <React.Fragment>
-      <li className='hover:bg-green-900 hover:text-white hover:rounded-lg'><Link to='/'>Home</Link></li>
-      <li className='hover:bg-green-900 hover:text-white hover:rounded-lg'><Link to='/members'>Members</Link></li>
-      <li className='hover:bg-green-900 hover:text-white hover:rounded-lg'><Link to='/notice'>Notice</Link></li>
-      <li className='hover:bg-green-900 hover:text-white hover:rounded-lg'><Link to='/about'>About Us</Link></li>
+      <li>
+        <NavLink exact to='/' activeClassName='active'>
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to='/members' activeClassName='active'>
+          Members
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to='/committee' activeClassName='active'>
+          Executive Committee
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to='/articles' activeClassName='active'>
+          Articles
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to='/about' activeClassName='active'>
+          About Us
+        </NavLink>
+      </li>
     </React.Fragment>
   );
 
   return (
-    <div className="navbar bg-orange-300">
+    <div className="navbar font-normal" style={{ background: 'linear-gradient(135deg, #FFC764, #E3B655)' }}>
       <div className="navbar-start justify-center">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -57,7 +80,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to='/'>
-          <img src={logo} alt="" className='w-24' />
+          <img src={logo} alt="" className='w-20' />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -65,33 +88,43 @@ const Navbar = () => {
           {menuItems}
         </ul>
       </div>
-      <div className="navbar-end">
-      <ul className="menu menu-horizontal px-1">
-      {isLoading ? (
-            <li>
-              <AiOutlineLoading className="animate-spin" />
-            </li>
-          ) : user?.uid ? ( 
-            <li className="flex items-center">
-              <button
-                className="hover:bg-green-900 hover:text-white hover:rounded-lg"
-                onClick={handleLogOut}
-              >
-                Sign Out
-              </button>
-              <p className="font-semibold">{user?.displayName}</p>
-              <div style={circularImageStyle}>
-                <img className="w-full h-full object-cover" src={user?.photoURL} alt="" />
-              </div>
-            </li>
+      <div className="navbar-end justify-center">
+      {user?.uid ? (
+<div className="dropdown dropdown-end" ref={dropdownRef}>
+<label tabIndex={0} className="btn btn-ghost btn-circle avatar" onClick={toggleDropdown}>
+                  <div className="w-10 rounded-full">
+                    <img src={user?.photoURL} alt='' />
+                  </div>
+                </label>
+                {isDropdownOpen && (
+                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 absolute left-1/2 top-full transform -translate-x-1/2 up-arrow">
+                <li>
+               <p className="font-semibold">{user?.displayName}</p>
+               </li>
+                    <li>
+                      <Link to="/profile" className="justify-between">
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <button onClick={handleLogOut}>Logout</button>
+                    </li>
+                  </ul>
+                  )}
+    </div>
           ) : (
-            <li className="hover:bg-green-900 hover:text-white hover:rounded-lg">
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Signup</Link>
-              <FaUserCircle className="text-2xl ml-2" />
+            <ul className="menu menu-horizontal px-1 items-center">
+            <li>
+              <NavLink to="/login" activeClassName="active">Login</NavLink>
+              </li>
+              <li>
+              <NavLink to="/signup" activeClassName="active">Signup</NavLink>
+              </li>
+              <li>
+              <FaUserCircle className="text-3xl p-0 ml-2" />
             </li>
-          )}
         </ul>
+          )}
       </div>
     </div>
   );

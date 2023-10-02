@@ -38,26 +38,42 @@ const Signup = () => {
       const imageData = await response.json();
       console.log(imageData);
 
-      createUser(data.email, data.password)
-        .then(result => {
-          const user = result.user;
-          console.log(user);
-          const userInfo = {
-            displayName: data.name,
-            photoURL: imageData.secure_url,
-          };
-          setUser(user);
-          updateUser(userInfo)
-            .then(() => {
-              setIsLoading(false);
-              setUser(user);
-              navigate(from, { replace: true });
-            })
-            .catch(err => console.log(err));
-        })
-        .catch(error => console.log(error));
-    } catch (error) {
+      const userCredential = await createUser(data.email, data.password);
+      const user = userCredential.user;
+      const userInfo = {
+        displayName: data.name,
+        email: data.email,
+        mobileNumber: data.number,
+        photoURL: imageData.secure_url,
+        companyName: data.company,
+        designation: data.designation,
+        address: data.address,
+        batch: data.batch,
+        department: data.department,
+        bloodGroup: data.bloodGroup
+      }
+
+      fetch('http://localhost:5000/members', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(userInfo)
+      })
+      .then(res => res.json())
+      .then(result =>{
+        console.log(result)
+      })
+
+      await updateUser(userInfo);
+      setIsLoading(false);
+      setUser(user);
+      navigate(from, { replace: true });
+      window.location.reload();
+    } 
+    catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -109,9 +125,16 @@ const Signup = () => {
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Current Profession</span>
+            <span className="label-text">Company Name</span>
           </label>
-          <input type='text' {...register("profession")} placeholder="Describe your profession" className="input input-bordered w-full max-w-xs" />
+          <input type='text' {...register("company")} placeholder="Company Name" className="input input-bordered w-full max-w-xs" />
+        </div>
+
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Designation</span>
+          </label>
+          <input type='text' {...register("designation")} placeholder="Name of your designation" className="input input-bordered w-full max-w-xs" />
         </div>
 
         <div className="form-control">
@@ -144,6 +167,7 @@ const Signup = () => {
             <option value="15">15</option>
             <option value="16">16</option>
             <option value="17">17</option>
+            <option value="18">18</option>
             </select>
         </div>
 
