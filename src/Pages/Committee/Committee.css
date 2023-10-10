@@ -1,0 +1,69 @@
+.animated-border-box, .animated-border-box-glow{
+  position: relative;
+  overflow: hidden; 
+  /* Border Radius */
+	border-radius: 10px;
+	z-index: 1;
+}
+
+.animated-border-box-glow{
+  overflow: hidden;
+  /* Glow Blur */
+  filter: blur(5px);
+}
+
+.animated-border-box:before, .animated-border-box-glow:before {
+  content: '';
+  z-index: -2;
+  text-align: center;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(0deg);
+  position: absolute;
+	width: 99999px;
+	height: 99999px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+  /*border color, change middle color*/
+  /* change speed here */
+	animation: rotate 10s linear infinite;
+}
+
+.president-card:before {
+	background-image: conic-gradient(#FFD700, #FFFFFF, #FFD700 15%);
+}
+
+.gs-card:before {
+	background-image: conic-gradient(#C0C0C0, #FFFFFF, #C0C0C0 15%);
+}
+
+.animated-border-box:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+  /* border width */
+	left: 3%;
+	top: 3%;
+  /* double the px from the border width left */
+	width: calc(100% - 6%);
+	height: calc(100% - 6%);
+  /*bg color*/
+	background: whitesmoke;
+  /*box border radius*/
+	border-radius: 7px;
+}
+
+@keyframes rotate {
+	100% {
+		transform: translate(-50%, -50%) rotate(1turn);
+	}
+}
+
+.btn-newCom {
+	color: #052e16;
+	background-color: transparent;
+}
+.btn-newCom:hover {
+	color: white;
+	background-color: #052e16;
+}

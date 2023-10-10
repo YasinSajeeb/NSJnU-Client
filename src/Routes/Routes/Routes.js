@@ -5,6 +5,8 @@ import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
 import About from "../../Pages/About/About";
 import Members from "../../Pages/Members/Members";
+import Committee from "../../Pages/Committee/Committee";
+import Articles from "../../Pages/Articles/Articles";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
             {
                 path: '/members',
                 element: <Members></Members>
+            },
+            {
+                path: '/executivecommittee',
+                element: <Committee></Committee>
+            },
+            {
+                path: '/articles',
+                element: <Articles></Articles>
             }
         ]
     }

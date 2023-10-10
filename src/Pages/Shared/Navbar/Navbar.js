@@ -49,7 +49,7 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to='/committee' activeClassName='active'>
+        <NavLink to='/executivecommittee' activeClassName='active'>
           Executive Committee
         </NavLink>
       </li>

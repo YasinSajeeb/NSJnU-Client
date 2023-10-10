@@ -1,0 +1,8 @@
+.btn-newCom {
+	color: #052e16;
+	background-color: transparent;
+}
+.btn-newCom:hover {
+	color: white;
+	background-color: #052e16;
+}
