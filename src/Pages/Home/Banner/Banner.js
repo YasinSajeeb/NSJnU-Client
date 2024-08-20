@@ -1,41 +1,53 @@
-import React from 'react';
-import banner1 from '../../../assets/Banner_1.jpeg';
-import banner2 from '../../../assets/Banner_2.jpeg';
-import banner3 from '../../../assets/Banner_3.jpeg';
-import banner4 from '../../../assets/Banner_4.jpeg';
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import slidesData from "../../../assets/slides.json"; // Path to your JSON file
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css"; 
+import "./Banner.css";
 
 const Banner = () => {
+    const [slides, setSlides] = useState([]);
+
+    useEffect(() => {
+        setSlides(slidesData);
+    }, []);
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        arrows: false,
+        appendDots: dots => (
+            <div>
+                <ul className="custom-dots">{dots}</ul>
+            </div>
+        ),
+        customPaging: i => (
+            <div className="h-1 w-8 bg-gray-400 rounded-full mx-1"></div>
+        ),
+    };
+
     return (
-        <div className="carousel w-full">
-  <div id="slide1" className="carousel-item relative w-full">
-    <img src={banner1} alt='' className="w-full" />
-    <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide4" className="btn btn-circle">❮</a> 
-      <a href="#slide2" className="btn btn-circle">❯</a>
-    </div>
-  </div> 
-  <div id="slide2" className="carousel-item relative w-full">
-    <img src={banner2} alt='' className="w-full" />
-    <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide1" className="btn btn-circle">❮</a> 
-      <a href="#slide3" className="btn btn-circle">❯</a>
-    </div>
-  </div> 
-  <div id="slide3" className="carousel-item relative w-full">
-    <img src={banner3} alt='' className="w-full" />
-    <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide2" className="btn btn-circle">❮</a> 
-      <a href="#slide4" className="btn btn-circle">❯</a>
-    </div>
-  </div> 
-  <div id="slide4" className="carousel-item relative w-full">
-    <img src={banner4} alt='' className="w-full" />
-    <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide3" className="btn btn-circle">❮</a> 
-      <a href="#slide1" className="btn btn-circle">❯</a>
-    </div>
-  </div>
-</div>
+        <div className="py-7 bg-gradient-to-r from-[#191654] to-[#43C6AC]">
+          <div className="w-full max-w-6xl mx-auto relative">
+            <Slider {...settings}>
+                {slides.map((slide, index) => (
+                    <div key={index} className="relative">
+                      <div className="h-72 lg:h-[40rem] overflow-hidden">
+                        <img src={slide.image} alt={`Slide ${index + 1}`} className="w-full h-full object-cover rounded-lg" />
+                      </div>
+                        <div className="absolute bottom-2 lg:bottom-10 left-0 right-0 bg-black bg-opacity-80 text-white p-1 lg:p-5 text-center">
+                            <p className="m-0 text-xs lg:text-lg font-semibold lg:font-bold text-yellow-300">{slide.content}</p>
+                        </div>
+                    </div>
+                ))}
+            </Slider>
+          </div>
+        </div>
     );
 };
 

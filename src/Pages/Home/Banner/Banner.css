@@ -1,0 +1,27 @@
+.custom-dots {
+    position: absolute;
+    bottom: 20px; /* Adjust this value to move dots up or down */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-dots li {
+    margin: 0 5px; /* Spacing between dots */
+}
+
+.custom-dots li.slick-active div {
+    width: 22px; /* Increase width for active dot */
+    background-color: #ddd7c8; /* Active dot color */
+}
+
+.custom-dots li div {
+    transition: all 0.3s ease;
+    height: 4px;
+    width: 16px; /* Default width for inactive dots */
+    background-color: #4b3232; /* Inactive dot color */
+    border-radius: 0.25rem; /* Slightly rounded edges */
+}

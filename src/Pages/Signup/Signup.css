@@ -1,0 +1,8 @@
+button.signup {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button.signup:hover {
+    transform: scale(1.1);
+  }
+  

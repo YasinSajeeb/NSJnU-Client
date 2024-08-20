@@ -1,0 +1,51 @@
+.notice-container {
+    position: relative;
+    background-color: #911632;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.notice-label {
+    position: absolute;
+    left: 1rem;
+    z-index: 2; /* Ensures the label stays on top */
+    background-color: #911632; /* Matches the background color to hide the text behind */
+    padding-right: 1rem;
+}
+
+.notice-text-wrapper {
+    position: absolute;
+    left: 8rem; /* Adjust according to the space you want after "Notice:" */
+    width: calc(100% - 8rem); /* Adjusts the scrolling width */
+    overflow: hidden;
+}
+
+.notice-text {
+    display: inline-block;
+    animation: scroll 20s linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@media (max-width: 600px) {
+    .notice-text {
+        animation: scroll-small 18s linear infinite;
+    }
+
+    @keyframes scroll-small {
+        0% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+}

@@ -1,0 +1,28 @@
+.btn-article {
+	color: #052e16;
+	background-color: transparent;
+}
+.btn-article:hover {
+	color: white;
+	background-color: #052e16;
+}
+.btn-delete {
+	color: red;
+	background-color: transparent;
+}
+.btn-delete:hover {
+	color: white;
+	background-color: red;
+}
+@keyframes shiver {
+	0% { transform: rotate(0deg); }
+	25% { transform: rotate(-6deg); }
+	50% { transform: rotate(6deg); }
+	75% { transform: rotate(-4deg); }
+	100% { transform: rotate(4deg); }
+  }
+
+.shivering {
+	animation: shiver 0.4s infinite alternate;
+  }
+  

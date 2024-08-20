@@ -1,7 +1,11 @@
+.menu :where(li) {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
 .menu :where(li) > :where(a):hover,
 .menu :where(li) > :where(a.active) {
-  background-color: #052e16;
-  color: white;
+  background-color: #911632 !important;
+  color: white !important;
 }
 
 .up-arrow::before {
@@ -15,4 +19,24 @@
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 8px solid #ffffff; /* Use the same color as the dropdown background */
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  z-index: 10;
+  display: none; /* Ensure the dropdown is hidden by default */
+}
+
+.relative .dropdown-menu {
+  display: block; /* Display the dropdown when it's within a relative parent */
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: static;
+    margin-top: 0;
+  }
 }

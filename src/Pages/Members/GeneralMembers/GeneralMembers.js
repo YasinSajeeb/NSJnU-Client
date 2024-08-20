@@ -1,26 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import Loading from '../Shared/Loading/Loading';
+import { Link } from 'react-router-dom';
+import Loading from '../../Shared/Loading/Loading';
 
-const Members = () => {
+const GeneralMembers = () => {
 
-  const { data: members, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['members'],
     queryFn: async () => {
-      try{
-        const res = await fetch('http://localhost:5000/members', {
-          headers: {
-            authorization: `bearer ${localStorage.getItem('accessToken')}`
-          }
-        });
-        const data = await res.json();
-        return data;
-      }
-      catch(error){
-
-      }
+      const res = await fetch('https://nsjnu-server.vercel.app/members/generalmembers?status=approved', {
+        headers: {
+          authorization: `bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+      const data = await res.json();
+      return data;
     }
-  })
+  });
 
   if(isLoading){
    return <Loading></Loading>
@@ -44,7 +40,7 @@ const Members = () => {
     </thead>
     <tbody>
       {
-        members.map((member, i) => <tr key={member._id}>
+        data.map((member, i) => <tr key={member._id}>
           <th>{i + 1}</th>
           <td>
             <div className="flex items-center space-x-3">
@@ -57,7 +53,7 @@ const Members = () => {
           </td>
           <td>
               <div>
-                <div className="font-bold">{member.displayName}</div>
+                <Link to={`/members/${member._id}`}><div className="font-bold">{member.displayName}</div></Link>
                 <div className="text-sm opacity-50">{member.department}</div>
               </div>
           </td>
@@ -79,4 +75,4 @@ const Members = () => {
     );
 };
 
-export default Members;
+export default GeneralMembers;

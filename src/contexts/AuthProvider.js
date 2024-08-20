@@ -39,11 +39,6 @@ const AuthProvider = ({children}) => {
     },[])
     
 
-    useEffect(() => {
-        console.log('AuthProvider - User:', user);
-        console.log('AuthProvider - Loading:', loading);
-      }, [user, loading]);
-
     const authInfo = {
         createUser,
         signIn,
@@ -52,7 +47,6 @@ const AuthProvider = ({children}) => {
         user,
         loading,
         setUser
-        
     }
 
     return (

@@ -1,0 +1,24 @@
+.btn-job {
+    background-color: #FFC764;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-delete {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+  }
+  
+  .job-card {
+    transition: transform 0.2s;
+  }
+  
+  .job-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  

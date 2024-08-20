@@ -7,6 +7,7 @@ const Footer = () => {
   <div>
     <img src={logo} alt="" className='w-20'/>
     <p>Notredamians Society of Jagannath University</p>
+    <p>Chittaranjan Avenue</p>
   </div> 
   <div>
     <span className="footer-title">Social</span> 
